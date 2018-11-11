@@ -1,18 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <!-- <TargetFramework>netstandard2.0</TargetFramework> -->
+    <!-- EFcoreを使用するため、netstandard2.0 -> netcoreapp2.1 に変更 -->
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RootNamespace>trial_and_error_1028</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.4" />
     <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.13" />
   </ItemGroup>
 
+  <!-- .NetCore2.1 SDK に含まれているため不要 -->
+  <!-- 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
   </ItemGroup>
+  -->
   
 </Project>
