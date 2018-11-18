@@ -6,14 +6,9 @@ namespace trial_and_error_1028.kurumi
 {
     public partial class kurumiContext : DbContext
     {
-        public kurumiContext()
-        {
-        }
+        public kurumiContext() { }
 
-        public kurumiContext(DbContextOptions<kurumiContext> options)
-            : base(options)
-        {
-        }
+        public kurumiContext(DbContextOptions<kurumiContext> options) : base(options) { }
 
         public virtual DbSet<TaskGroup> TaskGroup { get; set; }
         public virtual DbSet<Tasks> Tasks { get; set; }
@@ -22,7 +17,7 @@ namespace trial_and_error_1028.kurumi
         {
             if (!optionsBuilder.IsConfigured)
             {
-                /* IsConfigured が false になるパターンは本来無い。
+                /* IsConfigured が false になるパターンは無い想定。
                  * 本アプリはサンプルのため許容する */
                 optionsBuilder.UseMySQL("server=localhost;port=3306;user=developer;password=lovecalico;database=kurumi");
             }
