@@ -6,9 +6,14 @@ namespace trial_and_error_1028.kurumi
 {
     public partial class kurumiContext : DbContext
     {
-        public kurumiContext() { }
+        public kurumiContext()
+        {
+        }
 
-        public kurumiContext(DbContextOptions<kurumiContext> options) : base(options) { }
+        public kurumiContext(DbContextOptions<kurumiContext> options)
+            : base(options)
+        {
+        }
 
         public virtual DbSet<TaskGroup> TaskGroup { get; set; }
         public virtual DbSet<Tasks> Tasks { get; set; }
@@ -17,8 +22,6 @@ namespace trial_and_error_1028.kurumi
         {
             if (!optionsBuilder.IsConfigured)
             {
-                /* IsConfigured が false になるパターンは無い想定。
-                 * 本アプリはサンプルのため許容する */
                 optionsBuilder.UseMySQL("server=localhost;port=3306;user=developer;password=lovecalico;database=kurumi");
             }
         }
@@ -51,15 +54,14 @@ namespace trial_and_error_1028.kurumi
                     .HasColumnName("TASK_ID")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.Content)
+                    .HasColumnName("CONTENT")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.GroupId)
                     .HasColumnName("GROUP_ID")
                     .HasColumnType("int(11)");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasColumnName("NAME")
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
 
                 entity.Property(e => e.Period)
                     .HasColumnName("PERIOD")
