@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using trial_and_error_1028.kurumi;
 
@@ -24,33 +26,47 @@ namespace trial_and_error_1028 {
     /// kurumi-ap用のテーブルにCRUDする
     /// </summary>
     public class Adorer : IAdorer {
-        IConfigurationRoot _configuration;
+        // IConfigurationRoot _configuration;
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="configuration"></param>
+        /*
         public Adorer(IConfigurationRoot configuration) {
             _configuration = configuration;
         }
+        */
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public Adorer() { }
 
         /// <summary>
         /// GROUPSとTASKSの全件を返却する
         /// </summary>
+        /// <remarks>
+        /// Taskを返すなら、右記を戻り値にする -> async Task<List<TaskOfGroup>>
+        /// </remarks>
         /// <returns>GROUPSとTASKSを結合したリスト</returns>
         public List<TaskOfGroup> GetAll() {
+            #region DIのチェック
+            // Console.WriteLine(_configuration.GetConnectionString("kurumi"));
+            #endregion
             using(var db = new kurumiContext()) {
                 // GROUPSを取得する
                 var groups = db.TaskGroup;
                 // GROUPSとTASKSを結合する
-                var query = groups.Join(db.Tasks, x => x.GroupId, y => y.GroupId, (g, t) => new TaskOfGroup {
-                    GroupId = g.GroupId,
-                    GroupName = g.Name,
-                    TaskId = t.TaskId,
-                    Status = t.Status,
-                    Content = t.Content,
-                    Pic = t.Pic,
-                    Period = t.Period
-                });
+                var query = groups.Join(db.Tasks, x => x.GroupId, y => y.GroupId, (g, t) =>
+                    new TaskOfGroup {
+                        GroupId = g.GroupId,
+                            GroupName = g.Name,
+                            TaskId = t.TaskId,
+                            Status = t.Status,
+                            Content = t.Content,
+                            Pic = t.Pic,
+                            Period = t.Period
+                    });
                 // 結果を返却する
                 return query.OrderBy(x => x.GroupId).ThenBy(x => x.TaskId).ToList();
             }

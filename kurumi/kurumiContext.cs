@@ -22,6 +22,7 @@ namespace trial_and_error_1028.kurumi
         {
             if (!optionsBuilder.IsConfigured)
             {
+                /* 自動生成されたDbContextクラスに手を入れたくない｡｡ */
                 optionsBuilder.UseMySQL("server=localhost;port=3306;user=developer;password=lovecalico;database=kurumi");
             }
         }
