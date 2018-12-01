@@ -1,33 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace trial_and_error_1028.kurumi
-{
-    public partial class kurumiContext : DbContext
-    {
-        public kurumiContext()
-        {
-        }
+namespace trial_and_error_1028.kurumi {
+    public partial class kurumiContext : DbContext {
+        public kurumiContext() { }
 
-        public kurumiContext(DbContextOptions<kurumiContext> options)
-            : base(options)
-        {
-        }
+        public kurumiContext(DbContextOptions<kurumiContext> options) : base(options) { }
 
         public virtual DbSet<TaskGroup> TaskGroup { get; set; }
         public virtual DbSet<Tasks> Tasks { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseMySQL("server=localhost;port=3306;user=developer;password=lovecalico;database=kurumi");
-            }
-        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<TaskGroup>(entity =>
-            {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            modelBuilder.Entity<TaskGroup>(entity => {
                 entity.HasKey(e => e.GroupId);
 
                 entity.ToTable("TASK_GROUP", "kurumi");
@@ -42,8 +27,7 @@ namespace trial_and_error_1028.kurumi
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Tasks>(entity =>
-            {
+            modelBuilder.Entity<Tasks>(entity => {
                 entity.HasKey(e => e.TaskId);
 
                 entity.ToTable("TASKS", "kurumi");
