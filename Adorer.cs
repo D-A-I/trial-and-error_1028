@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using trial_and_error_1028.kurumi;
 
@@ -26,21 +24,17 @@ namespace trial_and_error_1028 {
     /// kurumi-ap用のテーブルにCRUDする
     /// </summary>
     public class Adorer : IAdorer {
-        // IConfigurationRoot _configuration;
+        IConfigurationRoot _configuration;
+        kurumiContext _kurumiContext;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="configuration"></param>
-        /*
-        public Adorer(IConfigurationRoot configuration) {
-            _configuration = configuration;
+        public Adorer(IConfigurationRoot configuration, kurumiContext kurumiContext) {
+            _configuration = configuration; // 念のため受け取っているが､､現状は不要
+            _kurumiContext = kurumiContext;
         }
-        */
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        public Adorer() { }
 
         /// <summary>
         /// GROUPSとTASKSの全件を返却する
@@ -50,10 +44,9 @@ namespace trial_and_error_1028 {
         /// </remarks>
         /// <returns>GROUPSとTASKSを結合したリスト</returns>
         public List<TaskOfGroup> GetAll() {
-            #region DIのチェック
-            // Console.WriteLine(_configuration.GetConnectionString("kurumi"));
-            #endregion
-            using(var db = new kurumiContext()) {
+            // ## DEBUG
+            Console.WriteLine($"DEBUG：{_configuration.GetConnectionString("kurumi")}");
+            using(var db = _kurumiContext) {
                 // GROUPSを取得する
                 var groups = db.TaskGroup;
                 // GROUPSとTASKSを結合する
